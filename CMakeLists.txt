@@ -3,7 +3,7 @@ project(base64)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SOURCE_FILES source/methods.cpp)
+set(SOURCE_FILES source/methods.cpp source/structs.cpp)
 
 add_subdirectory(googletest)
 
