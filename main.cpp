@@ -4,11 +4,13 @@
 
 int main()
 {
-    const char* str = "foobar";
+    const char* str = "foo ba";
 
     const char* res = to_b64(str);
 
-    std::cout << res;
+    std::cout << res << std::endl;
+
+    std::cout << from_b64(res) << std::endl;
 
     delete[] res;
 

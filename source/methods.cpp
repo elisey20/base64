@@ -45,3 +45,48 @@ char* to_b64(const char* str)
 
     return res;
 }
+
+char* from_b64(const char* str)
+{
+    int strlen = 0;
+    while (str[strlen] != '\0')
+        strlen++;
+
+    int* count = new int;
+    *count = strlen * 3 / 4;
+    char* res = new char[*count];
+    delete count;
+
+    int i = 0;
+    int resI = 0;
+
+    while (i < strlen)
+    {
+        char chr1 = str[i++];
+        char chr2 = str[i++];
+        char chr3 = str[i++];
+        char chr4 = str[i++];
+
+        if (chr3 == '=')
+        {
+            chr3 = chr4 = 0;
+        }
+        else if (chr4 == '=')
+        {
+            chr4 = 0;
+        }
+
+        // Сдвигаем на 2 бита влево первый байт и вправо на 4 бита второй байт
+        char dec1 = (chr1 << 2) | (chr2 >> 4);
+        // Сдвигаем на 4 бита влево второй байт и вправо на 2 бита третий байт
+        char dec2 = (chr2 << 4) | (chr3 >> 2);
+        // Сдвигаем на 6 бит влево третий байт и складываем с 4 байтом
+        char dec3 = (chr3 << 6) | chr4;
+
+        res[resI++] = dec1;
+        res[resI++] = dec2;
+        res[resI++] = dec3;
+    }
+
+    return res;
+}
