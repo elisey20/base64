@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 #include "structs.h"
 
 char* to_b64(const char* str)
@@ -62,18 +63,18 @@ char* from_b64(const char* str)
 
     while (i < strlen)
     {
-        char chr1 = str[i++];
-        char chr2 = str[i++];
-        char chr3 = str[i++];
-        char chr4 = str[i++];
+        char chr1 = std::find(b64, b64 + 65, str[i++]) - b64;
+        char chr2 = std::find(b64, b64 + 65, str[i++]) - b64;
+        char chr3 = std::find(b64, b64 + 65, str[i++]) - b64;
+        char chr4 = std::find(b64, b64 + 65, str[i++]) - b64;
 
-        if (chr3 == '=')
+        if (chr3 == 64)
         {
-            chr3 = chr4 = 0;
+            chr3 = chr4 = '\0';
         }
-        else if (chr4 == '=')
+        else if (chr4 == 64)
         {
-            chr4 = 0;
+            chr4 = '\0';
         }
 
         // Сдвигаем на 2 бита влево первый байт и вправо на 4 бита второй байт
@@ -87,6 +88,9 @@ char* from_b64(const char* str)
         res[resI++] = dec2;
         res[resI++] = dec3;
     }
+
+    if (strlen == 0)
+        res[0] = '\0';
 
     return res;
 }

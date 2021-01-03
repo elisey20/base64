@@ -4,8 +4,7 @@
 
 int main()
 {
-    const char* str = "foo ba";
-
+    const char* str = "";
     const char* res = to_b64(str);
 
     std::cout << res << std::endl;
