@@ -23,13 +23,17 @@ char* to_b64(const char* str)
         char chr3 = str[i++];
 
         // Сдвигаем на 2 бита вправо и получаем 6 бит
-        char enc1 = chr1 >> 2;
+        char enc1 = (unsigned char)chr1 >> 2;
+        //enc1 = enc1 & 0x7F;
         // Берем 2 последних бита chr1 и складываем их с четырьмя из chr2
-        char enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+        char enc2 = (((unsigned char)chr1 & 3) << 4) | ((unsigned char)chr2 >> 4);
+        //enc2 = enc2 & 0x7F;
         // Берем 4 последних бита chr2 и складываем их с двумя из chr3
-        char enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+        char enc3 = (((unsigned char)chr2 & 15) << 2) | ((unsigned char)chr3 >> 6);
+        //enc2 = enc2 & 0x7F;
         // Берем 6 последних бит из chr3
-        char enc4 = chr3 & 63;
+        char enc4 = (unsigned char)chr3 & 63;
+        //enc1 = enc1 & 0x7F;
 
         if (chr2 == '\0') {
             enc3 = enc4 = 64;
