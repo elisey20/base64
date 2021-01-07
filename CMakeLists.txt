@@ -7,6 +7,8 @@ set(SOURCE_FILES source/methods.cpp source/structs.cpp)
 
 add_subdirectory(googletest)
 
+add_definitions(-i)
+
 add_executable(main main.cpp ${SOURCE_FILES})
 add_executable(tests tests.cpp ${SOURCE_FILES})
 

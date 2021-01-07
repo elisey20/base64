@@ -10,7 +10,7 @@ char* to_b64(const char* str)
 
     int* count = new int;
     *count = ceil(strlen * 4 / 3.0);
-    char* res = new char[*count];
+    char* res = new char[*count + 1];
     delete count;
 
     int i = 0;
@@ -44,6 +44,8 @@ char* to_b64(const char* str)
         res[resI++] = b64[enc4];
     }
 
+    res[resI] = '\0';
+
     return res;
 }
 
@@ -55,7 +57,7 @@ char* from_b64(const char* str)
 
     int* count = new int;
     *count = strlen * 3 / 4;
-    char* res = new char[*count];
+    char* res = new char[*count + 1];
     delete count;
 
     int i = 0;
@@ -89,8 +91,7 @@ char* from_b64(const char* str)
         res[resI++] = dec3;
     }
 
-    if (strlen == 0)
-        res[0] = '\0';
+    res[resI] = '\0';
 
     return res;
 }
